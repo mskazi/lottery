@@ -1,0 +1,128 @@
+@import './animated-title-colors.scss';
+
+/* Animated title styles */
+.animated-title-wrapper {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.animated-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 0.18em;
+  text-align: center;
+  background: none;
+  margin: 0 auto;
+}
+
+
+// Each letter static color
+.animated-title span {
+  margin: 0 0.08em;
+  display: inline-block;
+}
+
+
+.hidden-input {
+  display: none;
+}
+
+.mat-tab-group .mat-tab-label.mat-tab-label-active {
+  background: #a3cef1;
+  color: #000;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 4px 16px rgba(39, 76, 119, 0.10);
+  font-weight: 600;
+  z-index: 2;
+}
+
+.mat-tab-body-content {
+  box-shadow: 0 4px 24px rgba(39, 76, 119, 0.10);
+  border-radius: 0 0 12px 12px;
+  margin-top: -4px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 32px;
+  background: #e7ecef;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(39, 76, 119, 0.07);
+  color: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+
+.mat-tab-group {
+  margin: 24px 0;
+  border-radius: 12px;
+  border: 2px solid #274c77;
+  background: #e7ecef;
+  box-shadow: 0 1px 8px rgba(39, 76, 119, 0.08);
+  color: #000;
+}
+
+.mat-tab-body-content {
+  padding: 32px 16px;
+  border-radius: 8px;
+  border: 1px solid #274c77;
+  background: #e7ecef;
+  color: #000;
+}
+
+.form-row {
+  margin-bottom: 24px;
+  border-radius: 8px;
+  border: 1.5px solid #274c77;
+  background: #e7ecef;
+  padding: 24px 16px;
+  color: #000;
+  display: flex;
+  align-items: flex-end;
+  gap: 32px;
+  position: relative;
+}
+
+.form-col {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.form-btn {
+  height: 56px;
+  margin-left: 16px;
+  align-self: flex-end;
+  margin-bottom: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.error-message {
+  color: red;
+}
+
+.mat-form-field {
+  background: #6096ba !important;
+  border-radius: 6px;
+}
+
+.mat-input-element,
+.mat-form-field-label {
+  color: #000 !important;
+}

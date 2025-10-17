@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material'as mat;
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+$blue-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 300, 700);
+$blue-accent: mat.m2-define-palette(mat.$m2-blue-palette, 500, 300, 700);
+$blue-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$blue-theme: mat.m2-define-light-theme((color: (primary: $blue-primary,
+      accent: $blue-accent,
+      warn: $blue-warn,
+    )));
+
+@include mat.all-component-themes($blue-theme);
+
+
+body {
+  min-height: 100vh;
+  /*   background:
+    linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%),
+    url('data:image/svg+xml;utf8,<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="60" width="120" height="40" rx="12" fill="%23e57373" fill-opacity="0.25"/><rect x="1600" y="120" width="80" height="80" rx="16" fill="%234dd0e1" fill-opacity="0.18"/><rect x="300" y="900" width="160" height="32" rx="8" fill="%23ffd54f" fill-opacity="0.22"/><rect x="1200" y="300" width="60" height="120" rx="10" fill="%23ba68c8" fill-opacity="0.18"/><rect x="1800" y="900" width="120" height="40" rx="12" fill="%23f06292" fill-opacity="0.18"/><rect x="100" y="900" width="80" height="80" rx="16" fill="%2364b5f6" fill-opacity="0.18"/><rect x="600" y="100" width="120" height="40" rx="12" fill="%23ff9800" fill-opacity="0.18"/><rect x="400" y="200" width="60" height="120" rx="10" fill="%234caf50" fill-opacity="0.18"/><rect x="1400" y="900" width="160" height="32" rx="8" fill="%23e91e63" fill-opacity="0.18"/><rect x="200" y="300" width="120" height="40" rx="12" fill="%23ffb74d" fill-opacity="0.18"/><rect x="1800" y="400" width="80" height="80" rx="16" fill="%23a1887f" fill-opacity="0.18"/><rect x="900" y="900" width="120" height="40" rx="12" fill="%2390a4ae" fill-opacity="0.18"/><rect x="300" y="100" width="60" height="120" rx="10" fill="%23f44336" fill-opacity="0.18"/><rect x="1200" y="700" width="160" height="32" rx="8" fill="%23ffeb3b" fill-opacity="0.18"/><rect x="100" y="400" width="120" height="40" rx="12" fill="%239c27b0" fill-opacity="0.18"/><rect x="1600" y="900" width="80" height="80" rx="16" fill="%2300bcd4" fill-opacity="0.18"/><rect x="600" y="300" width="120" height="40" rx="12" fill="%23795748" fill-opacity="0.18"/><rect x="400" y="600" width="60" height="120" rx="10" fill="%23607d8b" fill-opacity="0.18"/><rect x="1400" y="100" width="160" height="32" rx="8" fill="%23e57373" fill-opacity="0.18"/><line x1="0" y1="0" x2="1920" y2="1080" stroke="%23ba68c8" stroke-width="8" stroke-opacity="0.12"/><line x1="1920" y1="0" x2="0" y2="1080" stroke="%234dd0e1" stroke-width="8" stroke-opacity="0.12"/><line x1="0" y1="540" x2="1920" y2="540" stroke="%23ffd54f" stroke-width="12" stroke-opacity="0.10"/></svg>');
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover; */
+  background-color: #525153;
+}

@@ -1,0 +1,90 @@
+// Animated title color keyframes for each letter
+@keyframes animatedTitleColor1 {
+  0% {
+    color: #e57373;
+  }
+
+  20% {
+    color: #f06292;
+  }
+
+  40% {
+    color: #ba68c8;
+  }
+
+  60% {
+    color: #64b5f6;
+  }
+
+  80% {
+    color: #ffd54f;
+  }
+
+  100% {
+    color: #e57373;
+  }
+}
+
+@keyframes animatedTitleColor2 {
+  0% {
+    color: #4caf50;
+  }
+
+  20% {
+    color: #00bcd4;
+  }
+
+  40% {
+    color: #2196f3;
+  }
+
+  60% {
+    color: #ffeb3b;
+  }
+
+  80% {
+    color: #e91e63;
+  }
+
+  100% {
+    color: #4caf50;
+  }
+}
+
+@keyframes animatedTitleColor3 {
+  0% {
+    color: #607d8b;
+  }
+
+  20% {
+    color: #a1887f;
+  }
+
+  40% {
+    color: #ba68c8;
+  }
+
+  60% {
+    color: #81c784;
+  }
+
+  80% {
+    color: #ffb74d;
+  }
+
+  100% {
+    color: #607d8b;
+  }
+}
+
+.animated-title span.color1 {
+  animation: animatedTitleColor1 2.2s infinite alternate;
+}
+
+.animated-title span.color2 {
+  animation: animatedTitleColor2 2.2s infinite alternate;
+}
+
+.animated-title span.color3 {
+  animation: animatedTitleColor3 2.2s infinite alternate;
+}

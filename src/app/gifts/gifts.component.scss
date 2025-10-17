@@ -1,0 +1,27 @@
+// Import/Export CSV button style
+.csv-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.import-csv-btn {
+  margin-left: 8px;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  height: 40px;
+  font-size: 1rem;
+}
+
+/* Add margin for tab content */
+.tab-content {
+  margin: 32px 0 0 0;
+}
+
+/* Gifts tab styles */
+.hidden-input {
+  display: none;
+}

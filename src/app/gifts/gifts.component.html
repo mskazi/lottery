@@ -1,0 +1,25 @@
+<div class="tab-content">
+  <div class="gifts-container">
+    <div class="csv-btn-row">
+      <button mat-raised-button color="accent" class="import-csv-btn" (click)="importCSV()">
+        <i class="fas fa-file-import"></i>
+        Import CSV
+      </button>
+    </div>
+    <input #fileInput type="file" accept=".csv" (change)="onFileChange($event)" class="hidden-input"
+      title="Import gifts CSV" />
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 gifts-table">
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef>Number</th>
+        <td mat-cell *matCellDef="let gift">{{gift.number}}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Gift Name</th>
+        <td mat-cell *matCellDef="let gift">{{gift.name}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
