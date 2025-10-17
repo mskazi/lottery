@@ -1,4 +1,4 @@
-@import './animated-title-colors.scss';
+@use './animated-title-colors.scss'as *;
 
 /* Animated title styles */
 .animated-title-wrapper {
