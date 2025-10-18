@@ -1,8 +1,8 @@
 <div class="tab-content">
   <form [formGroup]="rangeForm" (ngSubmit)="onSubmit()" class="form-row">
     <mat-form-field appearance="fill" class="form-col">
-      <mat-label>Αριθμός από</mat-label>
-      <input matInput type="number" formControlName="startRange" placeholder="Αριθμός από" />
+      <mat-label>Αριθμός Λαχνού Από</mat-label>
+      <input matInput type="number" formControlName="startRange" />
       <mat-error *ngIf="rangeForm.get('startRange')?.hasError('required') && rangeForm.get('startRange')?.touched">
         Ο αριθμός από είναι υποχρεωτικός.
       </mat-error>
@@ -15,8 +15,8 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-col">
-      <mat-label>Αριθμός σε</mat-label>
-      <input matInput type="number" formControlName="endRange" placeholder="Αριθμός σε" />
+      <mat-label>Αριθμός Λαχνού σε</mat-label>
+      <input matInput type="number" formControlName="endRange" />
       <mat-error *ngIf="rangeForm.get('endRange')?.hasError('required') && rangeForm.get('endRange')?.touched">
         Ο αριθμός σε είναι υποχρεωτικός.
       </mat-error>
@@ -29,8 +29,8 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-col">
-      <mat-label>Σύνολο Δώρων</mat-label>
-      <input matInput type="number" formControlName="totalGifts" placeholder="Σύνολο δώρων" />
+      <mat-label>Αριθμός Δώρων που κληρώνονται</mat-label>
+      <input matInput type="number" formControlName="totalGifts" />
       <mat-error *ngIf="rangeForm.get('totalGifts')?.hasError('required') && rangeForm.get('totalGifts')?.touched">
         Το σύνολο δώρων είναι υποχρεωτικό.
       </mat-error>
@@ -87,24 +87,20 @@
     </button>
   </div>
   <table mat-table [dataSource]="resultTable" class="mat-elevation-z8 result-table">
-    <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let row">{{row.index}}</td>
-    </ng-container>
-    <ng-container matColumnDef="selectedNumber">
-      <th mat-header-cell *matHeaderCellDef>Selected Number</th>
-      <td mat-cell *matCellDef="let row">{{row.selectedNumber}}</td>
-    </ng-container>
     <ng-container matColumnDef="giftNumber">
-      <th mat-header-cell *matHeaderCellDef>Gift Number</th>
+      <th mat-header-cell *matHeaderCellDef>Αριθμός Δώρου</th>
       <td mat-cell *matCellDef="let row">{{row.giftNumber}}</td>
     </ng-container>
+    <ng-container matColumnDef="selectedNumber">
+      <th mat-header-cell *matHeaderCellDef>Επιλεγμένος Λαχνός</th>
+      <td mat-cell *matCellDef="let row">{{row.selectedNumber}}</td>
+    </ng-container>
     <ng-container matColumnDef="parentName">
-      <th mat-header-cell *matHeaderCellDef>Parent Name</th>
+      <th mat-header-cell *matHeaderCellDef>Όνομα Γονέα</th>
       <td mat-cell *matCellDef="let row">{{row.parentName || '-'}} </td>
     </ng-container>
     <ng-container matColumnDef="giftName">
-      <th mat-header-cell *matHeaderCellDef>Gift Name</th>
+      <th mat-header-cell *matHeaderCellDef>Όνομα Δώρου</th>
       <td mat-cell *matCellDef="let row">{{row.giftName || '-'}} </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

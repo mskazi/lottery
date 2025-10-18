@@ -37,7 +37,7 @@ export class FormComponent implements OnInit {
   topParents: { winners: string[], count: number }[] = [];
   rangeForm: FormGroup;
 
-  displayedColumns: string[] = ['index', 'selectedNumber', 'giftNumber', 'parentName', 'giftName'];
+  displayedColumns: string[] = ['giftNumber', 'selectedNumber', 'parentName', 'giftName'];
   resultTable: any[] = [];
   showGiftAnimation = false;
   animatingRows: any[] = [];
@@ -106,7 +106,7 @@ export class FormComponent implements OnInit {
     if (this.rangeForm.valid) {
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: {
-          message: 'Are you sure you want to continue?'
+          message: 'Είσαι σίγουρος ότι θέλεις να συνεχίσεις;'
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -244,11 +244,10 @@ export class FormComponent implements OnInit {
 
   exportToCSV(): void {
     if (!this.resultTable || !this.resultTable.length) return;
-    const header = ['#', 'Selected Number', 'Gift Number', 'Parent Name', 'Gift Name'];
+    const header = ['Αριθμός Δώρου', 'Λαχνός', 'Όνομα Γονέα', 'Όνομα Δώρου'];
     const rows = this.resultTable.map((row: any) => [
-      row.index,
-      row.selectedNumber,
       row.giftNumber,
+      row.selectedNumber,
       row.parentName || '',
       row.giftName || ''
     ]);

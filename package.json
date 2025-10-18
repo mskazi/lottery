@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng deploy --build-target=lottery:build:production"
+    "deployGit": " ng deploy --build-target=lottery:build:production --base-href=https://mskazi.github.io/lottery/ "
   },
   "prettier": {
     "printWidth": 100,
