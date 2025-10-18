@@ -12,8 +12,10 @@
   margin-bottom: 12px;
 }
 
+
 .import-csv-btn,
-.export-csv-btn {
+.export-csv-btn,
+.reset-csv-btn {
   margin-left: 8px;
   min-width: 140px;
   display: flex;
@@ -44,6 +46,42 @@ form.form-row {
   flex-direction: row;
   justify-content: center;
   gap: 24px;
+}
+
+@media (max-width: 600px) {
+  form.form-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .form-col {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .form-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .result-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .result-table {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+
+  .result-table th {
+    font-weight: bold;
+    background: #e7ecef;
+    border-radius: 8px 8px 0 0;
+  }
 }
 
 .form-col {

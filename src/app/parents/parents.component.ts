@@ -12,6 +12,11 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./parents.component.scss']
 })
 export class ParentsComponent {
+
+  resetParents(): void {
+    this.parentsList = [];
+    localStorage.removeItem('parentsList');
+  }
   parentsList: Array<{ number: string, name: string }> = [];
 
 

@@ -21,6 +21,11 @@ export interface Gift {
   imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule]
 })
 export class GiftsComponent {
+
+  resetGifts(): void {
+    this.dataSource.data = [];
+    localStorage.removeItem('gifts');
+  }
   displayedColumns: string[] = ['number', 'name'];
   dataSource = new MatTableDataSource<Gift>([]);
 

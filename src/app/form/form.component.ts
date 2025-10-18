@@ -20,6 +20,21 @@ import { ConfirmDialogComponent } from './confirm-dialog.component';
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatDialogModule, MatIconModule],
 })
 export class FormComponent implements OnInit {
+  resetResults(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'Are you sure you want to reset the lottery results?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        localStorage.removeItem('resultTable');
+        this.resultTable = [];
+        this.topParents = [];
+      }
+    });
+  }
+  topParents: { winners: string[], count: number }[] = [];
   rangeForm: FormGroup;
 
   displayedColumns: string[] = ['index', 'selectedNumber', 'giftNumber', 'parentName', 'giftName'];
@@ -69,7 +84,7 @@ export class FormComponent implements OnInit {
 
       // Total Gifts: cannot be negative, cannot be greater than end
       if (gifts != null && end != null && gifts > end) {
-        this.rangeForm.get('totalGifts')?.setErrors({ giftsGreaterThanEnd: true });
+        //this.rangeForm.get('totalGifts')?.setErrors({ giftsGreaterThanEnd: true });
       } else if (gifts != null && gifts < 0) {
         this.rangeForm.get('totalGifts')?.setErrors({ min: true });
       } else {
@@ -109,13 +124,11 @@ export class FormComponent implements OnInit {
 
   executeAssignment() {
     const { startRange, endRange, totalGifts } = this.rangeForm.value;
-    // Generate range of numbers
+    // Generate range of parent numbers
     const numbers: number[] = [];
     for (let i = startRange; i <= endRange; i++) {
       numbers.push(i);
     }
-    // Shuffle numbers and pick totalGifts
-    const shuffledNumbers = this.shuffleArray(numbers).slice(0, totalGifts);
 
     // Get gifts from localStorage
     let gifts: { number: number, name: string }[] = [];
@@ -133,21 +146,81 @@ export class FormComponent implements OnInit {
       parents = JSON.parse(parentsRaw);
     }
 
-    // Build result
-    const resultTable = shuffledNumbers.map((num, idx) => {
-      const gift = shuffledGifts[idx];
-      const parent = parents.find(p => Number(p.number) === num);
-      return {
-        index: idx + 1,
-        selectedNumber: num,
-        giftNumber: gift?.number ?? null,
-        parentName: parent ? parent.name : '',
-        giftName: gift ? gift.name : ''
-      };
+    // Build result: assign all gifts randomly to parents in the range
+    let resultTable;
+    if (gifts.length === 0) {
+      // If no gifts, assign sequential gift numbers (1 to totalGifts), leave gift name blank
+      resultTable = Array(totalGifts).fill(0).map((_, idx) => {
+        // Pick a random parent number
+        const randomParentNumber = numbers[Math.floor(Math.random() * numbers.length)];
+        const parent = parents.find(p => Number(p.number) === randomParentNumber);
+        return {
+          index: idx + 1,
+          selectedNumber: randomParentNumber,
+          giftNumber: idx + 1,
+          parentName: parent ? parent.name : '',
+          giftName: ''
+        };
+      });
+    } else {
+      // Assign gifts by index, extra rows have no gift name
+      const assignedParentNumbers: number[] = [];
+      resultTable = Array(totalGifts).fill(0).map((_, idx) => {
+        // Pick a random parent number that hasn't been assigned yet
+        let availableParents = numbers.filter(n => !assignedParentNumbers.includes(n));
+        if (availableParents.length === 0) {
+          // If all parents have been assigned, allow repeats
+          availableParents = numbers;
+        }
+        const randomParentNumber = availableParents[Math.floor(Math.random() * availableParents.length)];
+        assignedParentNumbers.push(randomParentNumber);
+        const parent = parents.find(p => Number(p.number) === randomParentNumber);
+        let giftNumber = idx + 1;
+        let giftName = '';
+        if (idx < shuffledGifts.length) {
+          const gift = shuffledGifts[idx];
+          giftNumber = typeof gift.number === 'number' && !isNaN(gift.number) ? gift.number : giftNumber;
+          giftName = gift.name;
+        }
+        return {
+          index: idx + 1,
+          selectedNumber: randomParentNumber,
+          giftNumber: giftNumber,
+          parentName: parent ? parent.name : '',
+          giftName: giftName
+        };
+      });
+    }
+    // Order by gift number ascending
+    resultTable = resultTable.sort((a, b) => {
+      if (a.giftNumber == null) return 1;
+      if (b.giftNumber == null) return -1;
+      return a.giftNumber - b.giftNumber;
     });
     localStorage.setItem('resultTable', JSON.stringify(resultTable));
     this.resultTable = resultTable;
     this.animatingRows = resultTable;
+
+    // Calculate top 3 winners by selectedNumber (use parentName if available, else selectedNumber)
+    const winnerGiftCount: Record<string, number> = {};
+    resultTable.forEach(row => {
+      const winnerKey = row.parentName ? row.parentName : String(row.selectedNumber);
+      winnerGiftCount[winnerKey] = (winnerGiftCount[winnerKey] || 0) + 1;
+    });
+    // Convert to array and sort by count desc
+    const sorted = Object.entries(winnerGiftCount).sort((a, b) => b[1] - a[1]);
+    // Group by count (so ties are together)
+    const groups: { winners: string[], count: number }[] = [];
+    let prevCount: number | null = null;
+    sorted.forEach(([key, count]) => {
+      if (prevCount !== count) {
+        groups.push({ winners: [key], count });
+        prevCount = count;
+      } else {
+        groups[groups.length - 1].winners.push(key);
+      }
+    });
+    this.topParents = groups.slice(0, 3);
   }
 
   loadResultTable() {
@@ -180,7 +253,7 @@ export class FormComponent implements OnInit {
       row.giftName || ''
     ]);
     const csvContent = [header, ...rows]
-      .map((e: any[]) => e.map((v: any) => '"' + String(v).replace(/"/g, '""') + '"').join(','))
+      .map((e: any[]) => e.map((v: any) => String(v)).join(','))
       .join('\r\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);

@@ -4,6 +4,10 @@
       <i class="fas fa-file-import"></i>
       Import CSV
     </button>
+    <button mat-raised-button color="warn" class="reset-csv-btn" (click)="resetParents()" style="margin-left: 8px;">
+      <i class="fas fa-trash"></i>
+      Reset
+    </button>
   </div>
   <input #fileInput type="file" accept=".csv" class="hidden-input" (change)="onImportParents($event)" />
   <div *ngIf="parentsList.length > 0" class="parents-table-wrapper">

@@ -1,49 +1,49 @@
 <div class="tab-content">
   <form [formGroup]="rangeForm" (ngSubmit)="onSubmit()" class="form-row">
     <mat-form-field appearance="fill" class="form-col">
-      <mat-label>Start Range Number</mat-label>
-      <input matInput type="number" formControlName="startRange" placeholder="Enter start range number" />
+      <mat-label>Αριθμός από</mat-label>
+      <input matInput type="number" formControlName="startRange" placeholder="Αριθμός από" />
       <mat-error *ngIf="rangeForm.get('startRange')?.hasError('required') && rangeForm.get('startRange')?.touched">
-        Start range is required.
+        Ο αριθμός από είναι υποχρεωτικός.
       </mat-error>
       <mat-error *ngIf="rangeForm.get('startRange')?.hasError('min') && rangeForm.get('startRange')?.touched">
-        Start range must be 0 or greater.
+        Ο αριθμός από πρέπει να είναι 0 ή μεγαλύτερος.
       </mat-error>
       <mat-error
         *ngIf="rangeForm.get('startRange')?.hasError('startGreaterThanEnd') && rangeForm.get('startRange')?.touched">
-        Start range cannot be greater than end range.
+        Ο αριθμός από δεν μπορεί να είναι μεγαλύτερος από τον αριθμό σε.
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-col">
-      <mat-label>End Range Number</mat-label>
-      <input matInput type="number" formControlName="endRange" placeholder="Enter end range number" />
+      <mat-label>Αριθμός σε</mat-label>
+      <input matInput type="number" formControlName="endRange" placeholder="Αριθμός σε" />
       <mat-error *ngIf="rangeForm.get('endRange')?.hasError('required') && rangeForm.get('endRange')?.touched">
-        End range is required.
+        Ο αριθμός σε είναι υποχρεωτικός.
       </mat-error>
       <mat-error *ngIf="rangeForm.get('endRange')?.hasError('min') && rangeForm.get('endRange')?.touched">
-        End range cannot be negative.
+        Ο αριθμός σε δεν μπορεί να είναι αρνητικός.
       </mat-error>
       <mat-error
         *ngIf="rangeForm.get('endRange')?.hasError('endSmallerThanStart') && rangeForm.get('endRange')?.touched">
-        End range cannot be smaller than start range.
+        Ο αριθμός σε δεν μπορεί να είναι μικρότερος από τον αριθμό από.
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-col">
-      <mat-label>Total Gifts</mat-label>
-      <input matInput type="number" formControlName="totalGifts" placeholder="Enter total gifts" />
+      <mat-label>Σύνολο Δώρων</mat-label>
+      <input matInput type="number" formControlName="totalGifts" placeholder="Σύνολο δώρων" />
       <mat-error *ngIf="rangeForm.get('totalGifts')?.hasError('required') && rangeForm.get('totalGifts')?.touched">
-        Total gifts is required.
+        Το σύνολο δώρων είναι υποχρεωτικό.
       </mat-error>
       <mat-error *ngIf="rangeForm.get('totalGifts')?.hasError('min') && rangeForm.get('totalGifts')?.touched">
-        Total gifts cannot be negative.
+        Το σύνολο δώρων δεν μπορεί να είναι αρνητικό.
       </mat-error>
       <mat-error
         *ngIf="rangeForm.get('totalGifts')?.hasError('giftsGreaterThanEnd') && rangeForm.get('totalGifts')?.touched">
-        Total gifts cannot be greater than end range.
+        Το σύνολο δώρων δεν μπορεί να είναι μεγαλύτερο από το τέλος της σειράς.
       </mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="rangeForm.invalid"
-      class="form-btn">Submit</button>
+      class="form-btn">Εκτέλεση</button>
 
 
   </form>
@@ -60,11 +60,30 @@
     </div>
   </div>
 </div>
+<div *ngIf="resultTable.length > 0" class="top-parents-summary" style="margin-bottom: 1.5rem;">
+  <ul *ngIf="topParents.length">
+    <li *ngFor="let group of topParents; let i = index">
+      <span style="font-weight:bold; color:#1976d2;">
+        {{i === 0 ? 'Most gifts:' : i === 1 ? 'Second most gifts:' : 'Third most gifts:'}}
+      </span>
+      <span style="color:#333;">
+        <span *ngFor="let p of group.winners; let last = last">{{p}}{{!last ? ', ' : ''}}</span>
+        <span style="font-size:1.1em; color:#388e3c; font-weight:bold;"> ({{group.count}}
+          {{group.count === 1 ? 'Gift' : 'Gifts'}})</span>
+      </span>
+    </li>
+  </ul>
+</div>
 <div *ngIf="resultTable.length > 0" class="result-table-wrapper">
   <div class="csv-btn-row">
     <button mat-raised-button color="accent" class="export-csv-btn" (click)="exportToCSV()">
       <i class="fas fa-file-csv"></i>
       Export to CSV
+    </button>
+    <button mat-raised-button color="warn" class="reset-csv-btn" (click)="resetResults()" style="margin-left: 8px;"
+      type="button">
+      <i class="fas fa-trash"></i>
+      Reset
     </button>
   </div>
   <table mat-table [dataSource]="resultTable" class="mat-elevation-z8 result-table">

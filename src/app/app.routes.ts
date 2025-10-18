@@ -8,5 +8,6 @@ export const routes: Routes = [
   { path: '', redirectTo: 'form', pathMatch: 'full' },
   { path: 'form', component: FormComponent },
   { path: 'parents', component: ParentsComponent },
-  { path: 'gifts', component: GiftsComponent }
+  { path: 'gifts', component: GiftsComponent },
+  { path: '**', redirectTo: 'form' }
 ];
