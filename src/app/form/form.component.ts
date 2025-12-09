@@ -163,17 +163,12 @@ export class FormComponent implements OnInit {
         };
       });
     } else {
-      // Assign gifts by index, extra rows have no gift name
-      const assignedParentNumbers: number[] = [];
-      resultTable = Array(totalGifts).fill(0).map((_, idx) => {
-        // Pick a random parent number that hasn't been assigned yet
-        let availableParents = numbers.filter(n => !assignedParentNumbers.includes(n));
-        if (availableParents.length === 0) {
-          // If all parents have been assigned, allow repeats
-          availableParents = numbers;
-        }
-        const randomParentNumber = availableParents[Math.floor(Math.random() * availableParents.length)];
-        assignedParentNumbers.push(randomParentNumber);
+      // Shuffle parent numbers and pick unique ones for each gift
+      const shuffledParentNumbers = this.shuffleArray([...numbers]);
+      resultTable = [];
+      for (let idx = 0; idx < totalGifts; idx++) {
+        // Pick a unique parent number (no repeats until all numbers are used)
+        const randomParentNumber = shuffledParentNumbers[idx];
         const parent = parents.find(p => Number(p.number) === randomParentNumber);
         let giftNumber = idx + 1;
         let giftName = '';
@@ -182,14 +177,14 @@ export class FormComponent implements OnInit {
           giftNumber = typeof gift.number === 'number' && !isNaN(gift.number) ? gift.number : giftNumber;
           giftName = gift.name;
         }
-        return {
+        resultTable.push({
           index: idx + 1,
           selectedNumber: randomParentNumber,
           giftNumber: giftNumber,
           parentName: parent ? parent.name : '',
           giftName: giftName
-        };
-      });
+        });
+      }
     }
     // Order by gift number ascending
     resultTable = resultTable.sort((a, b) => {
